@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cadastro de Cidades e Arestas</title>
+  <link rel="icon" href="imagens/agricultura.png" type="image/png">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .label-left {
+      text-align: left;
+    }
+  </style>
+</head>
+<body class="text-center border border-dark banner">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+        <div class="logo">
+            <a href="index.html">COPERATIVA</a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Página Inicial</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="lista_cidades_arestas.html">Cidades/Arestas</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="dijkstra.html">Trajeto</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="lista_clientes.html">Cadastro Cliente</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+  <div class="container mx-auto formularios">
+    <h1 class="mt-4">Cadastro de Cidades e Arestas</h1>
+    <!-- Formulário para cadastrar cidades -->
+    <h2 class="mt-4">Cadastrar Cidade</h2>
+    <form action="cadastrar_cidade.php" method="POST">
+      <div class="form-group">
+        <input type="text" class="form-control col-md-6 mx-auto" id="nome" name="nome" placeholder="Nova Cidade" required>
+        <p class="text-primary">Cadastrar uma nova cidade para podermos selecionar como origem ou destino</p>
+      </div>
+      
+      <button type="submit" class="btn btn-success mx-auto tamanhoBotao">Cadastrar</button>
+      <a href="lista_cidades_arestas.html" class="btn btn-outline-info mx-auto">Cidades Cadastradas</a>
+    </form>
+    <br>
+    <!-- Formulário para cadastrar arestas -->
+    <h2 class="mt-4">Cadastrar Aresta</h2>
+    <form action="cadastrar_arestas.php" method="POST">
+      <div class="form-group">
+        <select id="cidadeOrigem" name="origem" class="form-control col-md-6 mx-auto" required>
+          <option value="" selected>Selecione a cidade de origem</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <select id="cidadeDestino" name="destino" class="form-control col-md-6 mx-auto" required>
+          <option value="" selected>Selecione a cidade de destino</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <input type="number" class="form-control col-md-6 mx-auto" id="peso" name="peso" placeholder="Distância em km" required>
+        <p class="text-primary">Lembre-se de cadastrar as arestas com todas as cidades que faz a ligação direta, o caminho  devolta faz automaticamente!</p>
+      </div>
+      <button type="submit" class="btn btn-success tamanhoBotao">Cadastrar</button>
+    </form>
+    
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="buscar_arestas.js"></script>
+
+</body>
+</html>

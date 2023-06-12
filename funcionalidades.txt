@@ -1,0 +1,3 @@
+-> Permite cadastrar um nova cidade para implementar no grafo;
+-> Permite acrecentar uma nova cidade no grafo;
+-> Trás as cidades do grafo para selecionar;
