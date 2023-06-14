@@ -1,87 +1,67 @@
 
-// Criação da função dijkstra - INÍCIO
-function dijkstra(grafo, origem, destino) { //função dijkstra recebe três parametros e encontrar o menor caminho em um grafo ponderado
-  let menorCaminho = null; // Variável para armazenar o menor caminho encontrado
-  let somaPesos = Infinity; // Variável para armazenar a soma dos pesos das arestas
-
-  class PriorityQueue { // classe será usada para implementar uma fila de prioridade
-    constructor() {
-      this.queue = [];
-    }
-    // Adiciona um elemento à fila de prioridade com base no peso
-    enqueue(element) { //inicializa propriedade queue como um array vazio para armazenar os elementos da fila
-      if (this.isEmpty()) { //verifica se a fila está vazia, Se estiver vazia, o element é  adicionado ao final da fila usando this.queue.push(element)
+// Classe PriorityQueue
+class PriorityQueue {
+  constructor() {
+    this.queue = [];
+  }
+  enqueue(element) {
+    if (this.isEmpty()) {
+      this.queue.push(element);
+    } else {
+      let added = false;
+      for (let i = 0; i < this.queue.length; i++) {
+        if (element.peso < this.queue[i].peso) {
+          this.queue.splice(i, 0, element);
+          added = true;
+          break;
+        }
+      }
+      if (!added) {
         this.queue.push(element);
-      } else {  //é inserido em sua posição correta na fila com base em seu peso
-        let added = false; // é usada para indicar se o element foi adicionado à fila.
-        for (let i = 0; i < this.queue.length; i++) { //percorre os elementos existentes na fila, se o peso do element for menor, ele é inserido antes do elemento atual 
-          if (element.peso < this.queue[i].peso) { //Para cada elemento na fila, é verificado se o peso do elemento que está sendo adicionado (element.peso) é menor do que o peso do elemento atual na fila 
-            this.queue.splice(i, 0, element); //o método splice é usado para adicionar o elemento na posição i da fila. O argumento 0 faz a substituição sem remover
-            added = true; //usada para indicar que o elemento foi adicionado
-            break;
-          }
-        }
-        if (!added) { // se o elemento tiver o maior peso até agora a variavel added continua false
-          this.queue.push(element); // e adiciona no final da fila
-        }
       }
-    }
-    //resumo: garante que os elementos sejam adicionados à fila em ordem crescente com base no peso
-
-    // Remove e retorna o elemento de maior prioridade da fila
-    dequeue() {  //O método dequeue é usado para remover o elemento om menor peso da fila
-      if (!this.isEmpty()) {
-        return this.queue.shift();
-      }
-      return null;
-    }
-
-    //metodo isEmpty é usado para verificar se a fila está vazia antes de realizar operações de remoção
-    isEmpty() {
-      return this.queue.length === 0;
-    }
-  } 
-
-  // Função para buscar os caminhos a partir de uma cidade atual
-function buscaCaminhos(atual, caminho, peso) {
-  const fila = new PriorityQueue(); // Fila de prioridade para explorar os vizinhos
-  fila.enqueue({ cidade: atual, caminho: caminho.slice(), peso: peso }); // Adiciona o primeiro elemento à fila
-
-  while (!fila.isEmpty()) { // Enquanto a fila não estiver vazia
-    const { cidade, caminho, peso } = fila.dequeue(); // Remove o elemento de maior prioridade da fila
-
-    // Verifica se chegou ao destino
-    if (cidade === destino) {
-      menorCaminho = caminho; // Atualiza o menor caminho encontrado
-      somaPesos = peso; // Atualiza a soma dos pesos das arestas
-      break; // Encontrou o destino, encerra a busca
-    }
-
-    // Verifica se a cidade já está no caminho atual
-    if (caminho.indexOf(cidade) === -1) { //se a cidade não estiver no caminho atual ela pode ser adicionada
-      caminho.push(cidade); // Adiciona a cidade ao caminho atual
-
-      const vizinhos = grafo[cidade]; //recebe um objeto que representa os vizinhos da cidade atual no grafo
-      for (let vizinho in vizinhos) { //percorre todos os vizinhos da cidade atual
-        const novoPeso = peso + vizinhos[vizinho]; // soma os pesos com os pesos acumulados até o momento 
-        fila.enqueue({ cidade: vizinho, caminho: caminho.slice(), peso: novoPeso }); // Adiciona os vizinhos à fila com o novo peso
-      }
-      caminho.pop(); // Remove a cidade do caminho atual para explorar outros caminhos
     }
   }
+  dequeue() {
+    if (!this.isEmpty()) {
+      return this.queue.shift();
+    }
+    return null;
+  }
+  isEmpty() {
+    return this.queue.length === 0;
+  }
 }
-  // Inicializa a busca a partir da cidade de origem
-  //inicia a exploração do grafo a partir da cidade de origem, buscando o menor caminho até o destino
+
+// Função dijkstra
+function dijkstra(grafo, origem, destino) {
+  let menorCaminho = null;
+  let somaPesos = Infinity;
+  function buscaCaminhos(atual, caminho, peso) {
+    const fila = new PriorityQueue();
+    fila.enqueue({ cidade: atual, caminho: caminho.slice(), peso: peso });
+    while (!fila.isEmpty()) {
+      const { cidade, caminho, peso } = fila.dequeue();
+      if (cidade === destino) {
+        menorCaminho = caminho;
+        somaPesos = peso;
+        break;
+      }
+      if (caminho.indexOf(cidade) === -1) {
+        caminho.push(cidade);
+
+        const vizinhos = grafo[cidade];
+        for (let vizinho in vizinhos) {
+          const novoPeso = peso + vizinhos[vizinho];
+          fila.enqueue({ cidade: vizinho, caminho: caminho.slice(), peso: novoPeso });
+        }
+        caminho.pop();
+      }
+    }
+  }
   buscaCaminhos(origem, [], 0);
 
-  // Retorna o menor caminho encontrado e a soma dos pesos das arestas
   return { caminho: menorCaminho, somaPesos };
 }
-// Criação da função dijkstra - FIM
-
-
-
-
 
 // Evento disparado quando o DOM está pronto
 document.addEventListener('DOMContentLoaded', function() {
@@ -107,6 +87,9 @@ document.addEventListener('DOMContentLoaded', function() {
           cidadeDestinoSelect.appendChild(option2);
         });
 
+
+
+        
         // Função executada quando o botão de busca é clicado
         function executarDijkstra() {
           const cidadeOrigem = document.getElementById('cidadeOrigem').value;
