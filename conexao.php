@@ -1,11 +1,22 @@
 <?php
-$host = 'localhost';
-$usuario = 'root';
-$senha = '';
-$banco = 'dijkstra';
+$serverName = "localhost\SQLEXPRESS";
+$connectionOptions = array(
+    "Database" => "projeto",
+    "Uid" => "sa",
+    "PWD" => "sa"
+);
 
-$conexao = new mysqli($host, $usuario, $senha, $banco);
-if ($conexao->connect_error) {
-    die('Erro na conexão com o banco de dados: ' . $conexao->connect_error);
+// Estabelecendo uma conexão com o SQL Server
+$conexao = sqlsrv_connect($serverName, $connectionOptions);
+
+if (!$conexao) {
+    $errors = sqlsrv_errors();
+    foreach ($errors as $error) {
+        echo "Erro na conexão com o SQL Server: " . $error['message'] . "<br>";
+    }
+} else {
+    //echo 'Conexão com o SQL Server estabelecida com sucesso!';
 }
+
+
 ?>

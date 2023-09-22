@@ -8,11 +8,40 @@
 .texto{
     margin-top: 25vh;
 }
+.navbar-collapse{
+    flex-grow: 0 !important;
+}
+/*.carousel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 15%;
+    left: 10vh;
+    position: absolute;
+    width: 1250px ;
+    border: 1px solid;
+    height: 520px;
+}*/
+.carousel {
+    display: flex !important;
+    top: 10%;
+    position: absolute;
+    width: 1250px ;
+    border: 1px solid;
+    height: 520px;
+    background-color: black;
+    
+}
+
+.d-block {
+    display: block !important;
+}
+
 nav{
-    position: fixed;
+    /*position: fixed;*/
     top: 0;
     width: 100%;
-    /*background-color: #309652;*/
+    background-color: #1618172d;
     padding: 10px 60px;
     display: flex;
     justify-content: space-between;
@@ -49,11 +78,12 @@ nav li a:hover{
 .banner{ 
     background: linear-gradient( rgba(0,0,0,0.281), rgba(0,0,0,0.308)),url('imagens/artigo-buranello-site-1200px.jpg');
     background-size: cover;
-    /*display: flex;*/
+    display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     background-repeat: no-repeat;
+    border-radius: 9% !important;
 }
 .texto .titulo{
     color: #fff !important;
@@ -119,7 +149,7 @@ nav li a:hover{
     margin-top: 13vh;
     background-size: cover !important;
     color: #fff;
-    background: linear-gradient( rgba(0, 0, 0, 0.637), rgba(0, 0, 0, 0.582)),url('imagens/fundo.png');
+    background: linear-gradient( rgba(0, 0, 0, 0.637), rgba(0, 0, 0, 0.582)),url('imagens/cabo.png');
 }
 
 .tamanhoBotao{
@@ -134,4 +164,11 @@ nav li a:hover{
     margin-top: 4vh;
     margin-block-end: 4vh;
 }
+
+/* Estilo personalizado para alertas estreitos */
+.alert-narrow {
+    max-width: 400px; /* Ajuste a largura máxima desejada */
+    margin: 0 auto; /* Centraliza horizontalmente */
+  }
+  
   
